@@ -8,14 +8,51 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, world!")
-            .padding()
+  var body: some View {
+    
+    TabView {
+      
+      NavigationView {
+        List {
+          
+        }
+        .navigationBarTitle("Home")
+        .navigationBarItems(trailing: Image(systemName: "house"))
+      }.tabItem {
+        Image(systemName: "house")
+        Text("Home")
+      }
+      
+      NavigationView {
+        List {
+          
+        }
+        .navigationBarTitle("Statement")
+        .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))
+      }.tabItem {
+        Image(systemName: "doc.plaintext")
+        Text("Statement")
+      }
+      
+      NavigationView {
+        List {
+          
+        }
+        .navigationBarTitle("Activity")
+        .navigationBarItems(trailing: Image(systemName: "dollarsign.circle"))
+      }.tabItem {
+        Image(systemName: "dollarsign.circle")
+        Text("Activity")
+      }
+      
     }
+    
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+  static var previews: some View {
+    ContentView()
+      .preferredColorScheme(.dark)
+  }
 }
