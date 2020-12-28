@@ -10,12 +10,24 @@ import SwiftUI
 
 struct StatementView: View {
   var body: some View {
-    Text("Statement View Tab")
+    NavigationView {
+      VStack() {
+        List{
+          NavigationLink(destination: StatementDetails()) {
+            Text("2021")
+          }
+          Text("2020")
+          Text("2019")
+        }
+        .navigationTitle(Text("Cycles"))
+      }
+    }
   }
 }
 
 struct StatementView_Previews: PreviewProvider {
   static var previews: some View {
     StatementView()
+      .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }

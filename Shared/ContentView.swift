@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    
+     
     TabView {
       
       NavigationView {
-        List {
-          
+        HStack {
+          HomeView()
         }
         .navigationBarTitle("Home")
         .navigationBarItems(trailing: Image(systemName: "house"))
@@ -24,8 +24,8 @@ struct ContentView: View {
       }
       
       NavigationView {
-        List {
-          
+        HStack {
+          StatementView()
         }
         .navigationBarTitle("Statement")
         .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))
