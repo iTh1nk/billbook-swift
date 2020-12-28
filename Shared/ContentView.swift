@@ -13,7 +13,7 @@ struct ContentView: View {
     TabView {
       
       NavigationView {
-        HStack {
+        VStack {
           HomeView()
         }
         .navigationBarTitle("Home")
@@ -24,7 +24,7 @@ struct ContentView: View {
       }
       
       NavigationView {
-        HStack {
+        VStack {
           StatementView()
         }
         .navigationBarTitle("Statement")
@@ -35,8 +35,8 @@ struct ContentView: View {
       }
       
       NavigationView {
-        List {
-          
+        VStack {
+          ActivityView()
         }
         .navigationBarTitle("Activity")
         .navigationBarItems(trailing: Image(systemName: "dollarsign.circle"))

@@ -5,24 +5,39 @@
 //  Created by Chao Feng on 12/26/20.
 //
 
-import Foundation
 import SwiftUI
 
 struct StatementView: View {
+  
+  @State private var isShow = false
+  
   var body: some View {
-    NavigationView {
-      VStack() {
-        List{
-          NavigationLink(destination: StatementDetails()) {
-            Text("2021")
-          }
-          Text("2020")
-          Text("2019")
+    
+    List {
+      
+      Section(header: Text("2020")) {
+        Button("12-09") {
+          isShow.toggle()
         }
-        .navigationTitle(Text("Cycles"))
+        .sheet(isPresented: $isShow, content: {
+          StatementDetails()
+        })
+        .padding(.leading)
+      }
+      Section(header: Text("2019")) {
+        Button("12-09") {
+          isShow.toggle()
+        }
+        .sheet(isPresented: $isShow, content: {
+          StatementDetails()
+        })
+        .padding(.leading)
       }
     }
+    .listStyle(SidebarListStyle())
+    
   }
+  
 }
 
 struct StatementView_Previews: PreviewProvider {
