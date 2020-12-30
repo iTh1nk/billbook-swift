@@ -24,6 +24,7 @@ struct StatementView: View {
         })
         .padding(.leading)
       }
+      .listStyle(SidebarListStyle())
       Section(header: Text("2019")) {
         Button("12-09") {
           isShow.toggle()
