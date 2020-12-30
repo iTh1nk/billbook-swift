@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatementDetails: View {
+struct StatementDetail: View {
   @Environment(\.presentationMode) var presentationMode
 
       var body: some View {
@@ -23,9 +23,9 @@ struct StatementDetails: View {
       }
 }
 
-struct StatementDetails_Previews: PreviewProvider {
+struct StatementDetail_Previews: PreviewProvider {
   static var previews: some View {
-    StatementDetails()
+    StatementDetail()
       .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }

@@ -20,7 +20,7 @@ struct StatementView: View {
           isShow.toggle()
         }
         .sheet(isPresented: $isShow, content: {
-          StatementDetails()
+          StatementDetail()
         })
         .padding(.leading)
       }
@@ -30,7 +30,7 @@ struct StatementView: View {
           isShow.toggle()
         }
         .sheet(isPresented: $isShow, content: {
-          StatementDetails()
+          StatementDetail()
         })
         .padding(.leading)
       }
