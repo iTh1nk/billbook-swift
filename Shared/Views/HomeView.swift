@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+  
+  @State private var isLogin: Bool = false
+  
   var body: some View {
     
     VStack {
@@ -44,11 +47,23 @@ struct HomeView: View {
 //              .aspectRatio(contentMode: .fit)
           .frame(width: 400, height: 200)
         HStack {
-          VStack(alignment: .leading) {
-            Text("Please Login")
+          HStack() {
+            Text("Please")
               .font(.system(size: 30))
               .fontWeight(.heavy).foregroundColor(Color.white)
               .shadow(radius: 10)
+            Button(action: {
+              isLogin.toggle()
+            }) {
+              Text("Login")
+                .font(.system(size: 30))
+                .underline()
+                .fontWeight(.heavy).foregroundColor(Color.white)
+                .shadow(radius: 10)
+            }
+            .sheet(isPresented: $isLogin, content: {
+              LoginView()
+            })
           }
           Spacer()
         }.padding(.leading, 50)
@@ -114,6 +129,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
-      .preferredColorScheme(.light)
+      .preferredColorScheme(.dark)
   }
 }
