@@ -25,7 +25,7 @@ struct ContentView: View {
       
       NavigationView {
         VStack {
-          StatementView()
+//          StatementView(cycles: CycleModelView.cycleTemp)
         }
         .navigationBarTitle("Statement")
         .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))

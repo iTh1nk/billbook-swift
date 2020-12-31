@@ -10,40 +10,31 @@ import SwiftUI
 struct StatementView: View {
   
   @State private var isShow = false
+  @State private var isExpand = false
+  @State private var flags: [Bool] = [false, false, false]
+  
+  let cycles: [Cycle]
   
   var body: some View {
     
-    List {
-      
-      Section(header: Text("2020")) {
-        Button("12-09") {
-          isShow.toggle()
-        }
-        .sheet(isPresented: $isShow, content: {
-          StatementDetail()
-        })
-        .padding(.leading)
+    VStack {
+      List(cycles, children: \.children) { cycle in
+           Image(systemName: "doc.plaintext")
+           Text(cycle.date)
+
       }
+      .contentShape(Rectangle())
       .listStyle(SidebarListStyle())
-      Section(header: Text("2019")) {
-        Button("12-09") {
-          isShow.toggle()
-        }
-        .sheet(isPresented: $isShow, content: {
-          StatementDetail()
-        })
-        .padding(.leading)
-      }
+
     }
-    .listStyle(SidebarListStyle())
-    
+
   }
   
 }
 
 struct StatementView_Previews: PreviewProvider {
   static var previews: some View {
-    StatementView()
+    StatementView(cycles: CycleModelView.cycleTemp)
       .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }
