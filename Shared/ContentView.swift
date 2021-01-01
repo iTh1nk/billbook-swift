@@ -29,7 +29,7 @@ struct ContentView: View {
       NavigationView {
         VStack {
           Spacer()
-          StatementView(cycles: CycleModelView.cycleTemp)
+          StatementView()
         }
         .navigationBarTitle("Statement")
         .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))

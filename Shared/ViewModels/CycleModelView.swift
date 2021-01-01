@@ -7,22 +7,15 @@
 
 import Foundation
 
-struct CycleModelView {
-  
-  //  Temp Data
-    static let cycleTemp: [Cycle] = [
-        Cycle(date: "2019-10-09"),
-        Cycle(date: "2019-11-09"),
-        Cycle(date: "2019-12-09"),
-        Cycle(date: "2020-10-09"),
-        Cycle(date: "2020-11-09"),
-        Cycle(date: "2020-12-09"),
-        Cycle(date: "2021-10-09"),
-        Cycle(date: "2021-11-09"),
-        Cycle(date: "2021-12-09"),
-    ]
-  
-  
+class ApiCycle {
+  func getCycle(completion: @escaping ([Cycle]) -> ()) {
+    guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/cycles/get/") else { return }
+    URLSession.shared.dataTask(with: url) { (data, _, _) in
+      let cycles = try! JSONDecoder().decode([Cycle].self, from: data!)
+      DispatchQueue.main.async {
+        completion(cycles)
+      }
+    }
+    .resume()
+  }
 }
-
-

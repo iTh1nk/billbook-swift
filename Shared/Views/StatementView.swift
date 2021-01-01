@@ -13,34 +13,49 @@ struct StatementView: View {
   @State private var isExpand = false
   @State private var flags: [Bool] = [false, false, false]
   
-  let cycles: [Cycle]
+//  let cycles: [Cycle]
+  @State var cycles: [Cycle] = []
   
   var body: some View {
     
-      List(cycles) { cycle in
-        
-        NavigationLink(destination: StatementDetail()) {
-          HStack {
-            Image(systemName: "doc.plaintext")
-            Text(cycle.date)
-          }
-        }
-        
-      }
-      .contentShape(Rectangle())
-      .listStyle(SidebarListStyle())
-      .navigationBarTitle("Statement")
+//    VStack {
+//      List(cycles) { cycle in
+//
+//          NavigationLink(destination: StatementDetail()) {
+//            HStack {
+//              Image(systemName: "doc.plaintext")
+//              Text(cycle.date)
+//            }
+//          }
+//
+//        }
+//        .contentShape(Rectangle())
+//        .listStyle(SidebarListStyle())
+//      .navigationBarTitle("Statement")
+//    }
+//
+//  }
     
-  }
+      List(cycles) { cycle in
+        NavigationLink(destination: StatementDetail()) {
+          Text(cycle.date)
+        }
+      }
+      .onAppear{
+        ApiCycle().getCycle { (cycles) in
+          self.cycles = cycles
+        }
+      }
+    
   
 
-  
+  }
   
 }
 
 struct StatementView_Previews: PreviewProvider {
   static var previews: some View {
-    StatementView(cycles: CycleModelView.cycleTemp)
+    StatementView()
       .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }

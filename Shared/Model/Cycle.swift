@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct Cycle: Identifiable {
-  let id = UUID()
+struct Cycle: Identifiable, Codable {
+  let id: Int
   let date: String
+  let is_read: String
+  let createdAt: String
+  let updatedAt: String
+//  let cycle_statements: Array<>
 //  let children: [Cycle]?
 }
