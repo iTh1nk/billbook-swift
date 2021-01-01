@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+  
+  @State private var selectedTab: Int = 1
+  
   var body: some View {
-     
-    TabView {
+    
+    TabView(selection: $selectedTab) {
       
       NavigationView {
         VStack {
@@ -21,18 +24,19 @@ struct ContentView: View {
       }.tabItem {
         Image(systemName: "house")
         Text("Home")
-      }
+      }.tag(0)
       
       NavigationView {
         VStack {
-//          StatementView(cycles: CycleModelView.cycleTemp)
+          Spacer()
+          StatementView(cycles: CycleModelView.cycleTemp)
         }
         .navigationBarTitle("Statement")
         .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))
       }.tabItem {
         Image(systemName: "doc.plaintext")
         Text("Statement")
-      }
+      }.tag(1)
       
       NavigationView {
         VStack {
@@ -43,7 +47,7 @@ struct ContentView: View {
       }.tabItem {
         Image(systemName: "dollarsign.circle")
         Text("Activity")
-      }
+      }.tag(2)
       
     }
     

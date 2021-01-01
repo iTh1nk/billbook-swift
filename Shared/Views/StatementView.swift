@@ -17,24 +17,22 @@ struct StatementView: View {
   
   var body: some View {
     
-    
-    NavigationView {
       List(cycles) { cycle in
         
         NavigationLink(destination: StatementDetail()) {
-                  HStack {
-                    Image(systemName: "doc.plaintext")
-                    Text(cycle.date)
-                  }
+          HStack {
+            Image(systemName: "doc.plaintext")
+            Text(cycle.date)
+          }
         }
-
-            }
-//            .contentShape(Rectangle())
-      .listStyle(SidebarListStyle())
-    }
-    
+        
       }
-      
+      .contentShape(Rectangle())
+      .listStyle(SidebarListStyle())
+      .navigationBarTitle("Statement")
+    
+  }
+  
 
   
   
