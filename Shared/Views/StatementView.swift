@@ -17,18 +17,26 @@ struct StatementView: View {
   
   var body: some View {
     
-    VStack {
-      List(cycles, children: \.children) { cycle in
-           Image(systemName: "doc.plaintext")
-           Text(cycle.date)
+    
+    NavigationView {
+      List(cycles) { cycle in
+        
+        NavigationLink(destination: StatementDetail()) {
+                  HStack {
+                    Image(systemName: "doc.plaintext")
+                    Text(cycle.date)
+                  }
+        }
 
-      }
-      .contentShape(Rectangle())
+            }
+//            .contentShape(Rectangle())
       .listStyle(SidebarListStyle())
-
     }
+    
+      }
+      
 
-  }
+  
   
 }
 

@@ -10,5 +10,5 @@ import Foundation
 struct Cycle: Identifiable {
   let id = UUID()
   let date: String
-  let children: [Cycle]?
+//  let children: [Cycle]?
 }
