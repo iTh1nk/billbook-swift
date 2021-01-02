@@ -14,6 +14,36 @@ struct LoginView: View {
   @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
   @State private var storedToken: String = UserDefaults.standard.string(forKey: "Token") ?? ""
   
+  @EnvironmentObject var enUsername: EnUser
+  
+  private func decode(jwtToken jwt: String) throws -> [String: Any] {
+
+      enum DecodeErrors: Error {
+          case badToken
+          case other
+      }
+
+      func base64Decode(_ base64: String) throws -> Data {
+          let padded = base64.padding(toLength: ((base64.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
+          guard let decoded = Data(base64Encoded: padded) else {
+              throw DecodeErrors.badToken
+          }
+          return decoded
+      }
+
+      func decodeJWTPart(_ value: String) throws -> [String: Any] {
+          let bodyData = try base64Decode(value)
+          let json = try JSONSerialization.jsonObject(with: bodyData, options: [])
+          guard let payload = json as? [String: Any] else {
+              throw DecodeErrors.other
+          }
+          return payload
+      }
+
+      let segments = jwt.components(separatedBy: ".")
+      return try decodeJWTPart(segments[1])
+    }
+  
   var body: some View {
     NavigationView {
       VStack {
@@ -28,7 +58,7 @@ struct LoginView: View {
         }
         
         // Test Starts
-        Text(loginViewModel.username)
+        Text(enUsername.enUsername)
           .padding()
         ForEach(loginViewModel.user) { item in
           Text(item.username)
@@ -36,7 +66,14 @@ struct LoginView: View {
         }
         Button(action: {
           self.loginViewModel.checkDetails(username: loginViewModel.username, password: loginViewModel.password)
+          UserDefaults.standard.set("We0mmm", forKey: "Username")
+          enUsername.enUsername = "We0mmm2"
           print("Hello: ", loginViewModel.user)
+          
+          
+          try! print("Decode Begins: ", decode(jwtToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjZiNDQ4MjAtMmMzYi00OTQwLTgxMjgtMTI1MWFiMmM2M2M1IiwidXNlcm5hbWUiOiJtYWNAbWFjLmNvbSIsImV4cCI6MTYwOTYzNjk0MywiZW1haWwiOiJtYWNAbWFjLmNvbSJ9.igLb_52CDGeXc2L6DoeTzowjTrj_Gs8ziwnFjnlL44M"))
+          
+          
         }) {
           RoundedRectangle(cornerRadius: 10)
             .frame(width: 80,height: 39)
@@ -70,7 +107,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
-    LoginView()
+    LoginView().environmentObject(EnUser())
       .preferredColorScheme(.dark)
   }
 }

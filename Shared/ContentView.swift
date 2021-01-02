@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
   
   @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
+  @EnvironmentObject private var enUsername: EnUser
   
   @State private var selectedTab: Int = 0
   
@@ -22,7 +23,7 @@ struct ContentView: View {
           HomeView()
         }
         .navigationBarTitle("Home")
-        .navigationBarItems(leading: Text(storedUsername), trailing: Image(systemName: "house"))
+        .navigationBarItems(leading: Text(self.enUsername.enUsername), trailing: Image(systemName: "house"))
       }.tabItem {
         Image(systemName: "house")
         Text("Home")
@@ -51,6 +52,16 @@ struct ContentView: View {
         Text("Activity")
       }.tag(2)
       
+      NavigationView {
+        VStack {
+          
+        }
+        .navigationBarTitle("About")
+        .navigationBarItems(trailing: Image(systemName: "exclamationmark.circle"))
+      }.tabItem {
+        Image(systemName: "exclamationmark.circle")
+        Text("About")
+      }.tag(2)
     }
     
   }
@@ -58,7 +69,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    ContentView().environmentObject(EnUser())
       .preferredColorScheme(.dark)
   }
 }

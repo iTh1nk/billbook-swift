@@ -14,3 +14,9 @@ struct User: Identifiable {
   let loginTime: String
   let logoutTime: String
 }
+
+class EnUser: ObservableObject {
+  
+  @Published var enUsername: String = ""
+
+}

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
   
-  @State private var isLogin: Bool = false
+  @State private var isLogin: Bool = true
+  
+  @EnvironmentObject var enUsername: EnUser
   
   var body: some View {
     
@@ -62,7 +64,7 @@ struct HomeView: View {
                 .shadow(radius: 10)
             }
             .sheet(isPresented: $isLogin, content: {
-              LoginView()
+              LoginView().environmentObject(EnUser())
             })
           }
           Spacer()
@@ -128,7 +130,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    HomeView().environmentObject(EnUser())
       .preferredColorScheme(.dark)
   }
 }
