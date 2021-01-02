@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct User {
+  let username: String
+  let token: String
+  let loginTime: String
+  let logoutTime: String
+}

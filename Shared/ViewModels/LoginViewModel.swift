@@ -10,8 +10,32 @@ import Combine
 
 class LoginViewModel: ObservableObject {
   
+  var didChange = PassthroughSubject<LoginViewModel, Never>()
+  var authenticated = false {
+    didSet {
+      didChange.send(self)
+    }
+  }
+  func checkDetails(username: String, password: String) {
+    guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/auth/login/") else { return }
+    let body: [String: String] = ["email": username, "password": password]
+    let finalBody = try! JSONSerialization.data(withJSONObject: body)
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = finalBody
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    URLSession.shared.dataTask(with: request) { (data, resp, error) in
+      guard let data = data else { return }
+      let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
+      UserDefaults.standard.set(finalData.token, forKey: "Token")
+      print(finalData)
+    }
+    .resume()
+  }
+  
   @Published var username = ""
   @Published var password = ""
+  @Published var token = ""
   @Published var isValid = false
   @Published var inlineErrorForPassword = ""
   
@@ -40,7 +64,6 @@ class LoginViewModel: ObservableObject {
       }
       .assign(to: \.inlineErrorForPassword, on: self)
       .store(in: &cancellables)
-    
   }
   
   private var isUsernameValidPublisher: AnyPublisher<Bool, Never> {

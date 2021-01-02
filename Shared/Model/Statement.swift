@@ -8,8 +8,10 @@
 import Foundation
 
 struct Statement: Identifiable {
-  let id = UUID()
-  let user: String
+  let id: String
+  let username: String
   let balance: String
   let notes: String
+  let createdAt: String
+  let updatedAt: String
 }

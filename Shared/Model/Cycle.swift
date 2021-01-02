@@ -13,6 +13,5 @@ struct Cycle: Identifiable, Codable {
   let is_read: String
   let createdAt: String
   let updatedAt: String
-//  let cycle_statements: Array<>
-//  let children: [Cycle]?
+//  let cycle_statements: Array<Statement>
 }
