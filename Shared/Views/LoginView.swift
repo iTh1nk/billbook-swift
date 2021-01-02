@@ -28,8 +28,8 @@ struct LoginView: View {
         }
         
         // Test Starts
-//        Text(loginViewModel.user)
-//          .padding()
+        Text(loginViewModel.username)
+          .padding()
         ForEach(loginViewModel.user) { item in
           Text(item.username)
           Text(item.token)

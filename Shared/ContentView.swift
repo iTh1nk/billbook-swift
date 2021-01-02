@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
   
+  @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
+  
   @State private var selectedTab: Int = 0
   
   var body: some View {
@@ -20,7 +22,7 @@ struct ContentView: View {
           HomeView()
         }
         .navigationBarTitle("Home")
-        .navigationBarItems(trailing: Image(systemName: "house"))
+        .navigationBarItems(leading: Text(storedUsername), trailing: Image(systemName: "house"))
       }.tabItem {
         Image(systemName: "house")
         Text("Home")
