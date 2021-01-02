@@ -10,6 +10,10 @@ import Combine
 
 class LoginViewModel: ObservableObject {
   
+  @Published var user: [User] = [
+    .init(username: "", token: "", loginTime: "", logoutTime: "")
+  ]
+  
   var didChange = PassthroughSubject<LoginViewModel, Never>()
   var authenticated = false {
     didSet {
@@ -25,10 +29,13 @@ class LoginViewModel: ObservableObject {
     request.httpBody = finalBody
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     URLSession.shared.dataTask(with: request) { (data, resp, error) in
-      guard let data = data else { return }
-      let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
-      UserDefaults.standard.set(finalData.token, forKey: "Token")
-      print(finalData)
+      DispatchQueue.main.async {
+        guard let data = data else { return }
+        let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
+        UserDefaults.standard.set(finalData.token, forKey: "Token")
+        self.user = [.init(username: "Mac", token: finalData.token, loginTime: "", logoutTime: "")]
+        print(finalData)
+      }
     }
     .resume()
   }

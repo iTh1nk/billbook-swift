@@ -11,8 +11,6 @@ struct LoginView: View {
   
   @StateObject private var loginViewModel = LoginViewModel()
   
-  @State private var users = [User]()
-  
   @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
   @State private var storedToken: String = UserDefaults.standard.string(forKey: "Token") ?? ""
   
@@ -30,15 +28,15 @@ struct LoginView: View {
         }
         
         // Test Starts
-        Text(loginViewModel.username)
-          .padding()
-        Text(storedUsername)
-        Text(storedToken)
-          .padding()
+//        Text(loginViewModel.user)
+//          .padding()
+        ForEach(loginViewModel.user) { item in
+          Text(item.username)
+          Text(item.token)
+        }
         Button(action: {
-          print(loginViewModel.username)
-          print(loginViewModel.password)
           self.loginViewModel.checkDetails(username: loginViewModel.username, password: loginViewModel.password)
+          print("Hello: ", loginViewModel.user)
         }) {
           RoundedRectangle(cornerRadius: 10)
             .frame(width: 80,height: 39)

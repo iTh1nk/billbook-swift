@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct User {
+struct User: Identifiable {
+  let id = UUID()
   let username: String
   let token: String
   let loginTime: String
