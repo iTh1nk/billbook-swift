@@ -12,7 +12,7 @@ struct HomeView: View {
   @State private var isLogin: Bool = false
   @EnvironmentObject var enUser: EnUser
   
-  @State private var showAlert: Bool = true
+//  @State private var showAlert: Bool = true
   
   var body: some View {
     
@@ -43,6 +43,18 @@ struct HomeView: View {
             .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 1)
       )
       .padding([.top, .horizontal])
+      
+//      Display User Balance or Login Bar
+      
+
+      HStack {
+        Text("Check")
+      }
+      .contentShape(Rectangle())
+      .listStyle(SidebarListStyle())
+      .onAppear{
+        ActivityViewModel().getBalance(userId: "0585fb98-78fc-4363-980a-32d63c32cc3e")
+      }
       
       if enUser.enLoggedIn {
         HStack {
@@ -123,30 +135,6 @@ struct HomeView: View {
         .padding()
       }
     }
-    
-    
-//    VStack {
-//      ZStack {
-//        RadialGradient(gradient: Gradient(colors: [.orange, .red]), center: .center, startRadius: 100, endRadius: 370)
-//        VStack(alignment: .leading) {
-//          Text("STAY ACTIVE").font(.system(size: 30)).fontWeight(.heavy).foregroundColor(Color(red: 0.1, green: 0.6, blue: 0.8, opacity: 1.0))
-//          Text("CLOSE YOUR RINGS!").font(.system(size: 30)).fontWeight(.heavy).foregroundColor(Color(red: 0.1, green: 0.6, blue: 0.8, opacity: 1.0))
-//        }
-//      }
-//      .frame(width: 400, height: 200)
-//      .ignoresSafeArea()
-//      Spacer()
-//      HStack {
-//        Text("Balance as of cycle: $0")
-//          .padding(.horizontal)
-//        Spacer()
-//      }
-//      Spacer()
-//      Spacer()
-//      Spacer()
-//      Spacer()
-//      Spacer()
-//    }
     
   }
 }

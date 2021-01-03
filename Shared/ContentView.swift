@@ -27,7 +27,7 @@ struct ContentView: View {
           leading:
             enUser.enLoggedIn ?
             Text("Hi: \(String(self.enUser.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
-            Text(""),
+            Text("Welcome to Billbook - iOS").foregroundColor(.gray),
           trailing:
             Image(systemName: "house")
         )

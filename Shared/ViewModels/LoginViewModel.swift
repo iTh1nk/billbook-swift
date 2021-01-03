@@ -10,10 +10,6 @@ import Combine
 
 class LoginViewModel: ObservableObject {
   
-  @Published var user: [User] = [
-    .init(username: "", token: "", loginTime: "", logoutTime: "")
-  ]
-  
   @StateObject private var userVM = UserViewModel()
   
   // ********** TEST STARTS **********
