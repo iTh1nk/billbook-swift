@@ -11,8 +11,6 @@ struct HomeView: View {
   
   @State private var isLogin: Bool = true
   
-  @EnvironmentObject var enUsername: EnUser
-  
   var body: some View {
     
     VStack {
@@ -64,7 +62,7 @@ struct HomeView: View {
                 .shadow(radius: 10)
             }
             .sheet(isPresented: $isLogin, content: {
-              LoginView().environmentObject(EnUser())
+              LoginView()
             })
           }
           Spacer()
@@ -130,7 +128,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView().environmentObject(EnUser())
+    HomeView()
       .preferredColorScheme(.dark)
   }
 }
