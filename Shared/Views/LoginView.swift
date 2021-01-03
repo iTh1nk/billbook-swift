@@ -12,9 +12,6 @@ struct LoginView: View {
   
   @StateObject private var loginVM = LoginViewModel()
   
-  @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
-  @State private var storedToken: String = UserDefaults.standard.string(forKey: "Token") ?? ""
-  
   @EnvironmentObject var enUser: EnUser
   
   var body: some View {
@@ -30,24 +27,9 @@ struct LoginView: View {
           }
         }
         
-        // ********** TEST STARTS **********
-        Text("enUsername: \(enUser.enUsername)")
-          .padding()
-        ForEach(loginVM.user) { item in
-          Text(item.username)
-          Text(item.token)
-        }
         Button(action: {
           self.loginVM.checkDetails(username: loginVM.username, password: loginVM.password, enUser: enUser)
         }) {
-          RoundedRectangle(cornerRadius: 10)
-            .frame(width: 80,height: 39)
-            .colorInvert()
-            .overlay(Text("Post").foregroundColor(.white))
-        }
-        // ########## TEST ENDS ##########
-        
-        Button(action: {}) {
           RoundedRectangle(cornerRadius: 10)
             .frame(height: 60)
             .overlay(Text("Login").foregroundColor(.white))

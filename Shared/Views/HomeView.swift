@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
   
-  @State private var isLogin: Bool = true
+  @State private var isLogin: Bool = false
+  @EnvironmentObject var enUser: EnUser
+  
+  @State private var showAlert: Bool = true
   
   var body: some View {
     
@@ -41,62 +44,84 @@ struct HomeView: View {
       )
       .padding([.top, .horizontal])
       
-      ZStack {
-        Image("HomeLoginBar")
-            .resizable()
-//              .aspectRatio(contentMode: .fit)
-          .frame(width: 400, height: 200)
+      if enUser.enLoggedIn {
         HStack {
-          HStack() {
-            Text("Please")
-              .font(.system(size: 30))
-              .fontWeight(.heavy).foregroundColor(Color.white)
-              .shadow(radius: 10)
-            Button(action: {
-              isLogin.toggle()
-            }) {
-              Text("Login")
+          VStack(alignment: .leading) {
+            Text("Balance as of current cycle: ")
+              .font(.headline)
+              .foregroundColor(.secondary)
+              .padding(.top)
+            Text("$123")
+              .font(.title)
+              .fontWeight(.black)
+              .foregroundColor(.primary)
+              .lineLimit(3)
+              .padding(.vertical)
+            Text("No action required".uppercased())
+              .font(.caption)
+              .foregroundColor(.secondary)
+          }
+          .layoutPriority(100)
+          Spacer()
+        }
+        .padding()
+      } else {
+        ZStack {
+          Image("HomeLoginBar")
+              .resizable()
+  //              .aspectRatio(contentMode: .fit)
+            .frame(width: 400, height: 200)
+          HStack {
+            HStack() {
+              Text("Please")
                 .font(.system(size: 30))
-                .underline()
                 .fontWeight(.heavy).foregroundColor(Color.white)
                 .shadow(radius: 10)
+              Button(action: {
+                isLogin.toggle()
+              }) {
+                Text("Login")
+                  .font(.system(size: 30))
+                  .underline()
+                  .fontWeight(.heavy).foregroundColor(Color.white)
+                  .shadow(radius: 10)
+              }
+              .sheet(isPresented: $isLogin, content: {
+                LoginView()
+              })
             }
-            .sheet(isPresented: $isLogin, content: {
-              LoginView()
-            })
-          }
-          Spacer()
-        }.padding(.leading, 50)
-      }
-      .cornerRadius(10)
-      .overlay(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 1)
-      )
-      .padding([.top, .horizontal])
-      
-      HStack {
-        VStack(alignment: .leading) {
-          Text("Balance as of current cycle: ")
-            .font(.headline)
-            .foregroundColor(.secondary)
-            .padding(.top)
-          Text("$123")
-            .font(.title)
-            .fontWeight(.black)
-            .foregroundColor(.primary)
-            .lineLimit(3)
-            .padding(.vertical)
-          Text("No action required".uppercased())
-            .font(.caption)
-            .foregroundColor(.secondary)
+            Spacer()
+          }.padding(.leading, 50)
         }
-        .layoutPriority(100)
-        Spacer()
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+              .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 1)
+        )
+        .padding([.top, .horizontal])
       }
-      .padding()
-      
+  
       Spacer()
+      
+//      Text("")
+//        .alert(isPresented: $showAlert, content: {
+//            Alert(title: Text("Test"), message: Text("Body Test"))
+//        })
+      
+      if enUser.enLoggedIn {
+        Button(action: {
+          enUser.enLoggedIn = false
+          UserDefaults.standard.removeObject(forKey: "Username")
+          UserDefaults.standard.removeObject(forKey: "Exp")
+          UserDefaults.standard.removeObject(forKey: "UserID")
+          UserDefaults.standard.removeObject(forKey: "Token")
+        }) {
+          RoundedRectangle(cornerRadius: 10).fill(Color.red)
+            .frame(height: 60)
+            .overlay(Text("Logout").foregroundColor(.white))
+        }
+        .padding()
+      }
     }
     
     
@@ -128,7 +153,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
+    HomeView().environmentObject(EnUser())
       .preferredColorScheme(.dark)
   }
 }

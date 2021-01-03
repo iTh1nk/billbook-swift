@@ -71,8 +71,13 @@ class LoginViewModel: ObservableObject {
           do {
             //          print((finalData.token).dropFirst(7))
             //          print(finalData.token)
-            
+            print(try self.decode(jwtToken: finalData.token))
             enUser.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
+            enUser.enLoggedIn = true
+            UserDefaults.standard.set(enUser.enUsername, forKey: "Username")
+            UserDefaults.standard.set(try self.decode(jwtToken: finalData.token)["exp"], forKey: "Exp")
+            UserDefaults.standard.set(try self.decode(jwtToken: finalData.token)["user_id"], forKey: "UserID")
+            UserDefaults.standard.set(finalData.token, forKey: "Token")
             
             //          try print(self.decode(jwtToken: String(finalData.token.dropFirst(7))))
           } catch _ {
@@ -85,8 +90,8 @@ class LoginViewModel: ObservableObject {
     .resume()
   }
   
-  @Published var username = ""
-  @Published var password = ""
+  @Published var username = "mac@mac.com"
+  @Published var password = "macmaster"
   @Published var token = ""
   @Published var isValid = false
   @Published var inlineErrorForPassword = ""
@@ -139,7 +144,7 @@ class LoginViewModel: ObservableObject {
       .removeDuplicates()
       .map {
 //        Self.pwdCheck.evaluate(with: $0)
-        $0.count > 4
+        $0.count > 3
       }
       .eraseToAnyPublisher()
   }

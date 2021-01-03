@@ -18,5 +18,6 @@ struct User: Identifiable {
 class EnUser: ObservableObject {
   
   @Published var enUsername: String = ""
+  @Published var enLoggedIn: Bool = false
 
 }

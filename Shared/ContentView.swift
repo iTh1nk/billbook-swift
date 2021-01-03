@@ -23,7 +23,14 @@ struct ContentView: View {
           HomeView()
         }
         .navigationBarTitle("Home")
-        .navigationBarItems(leading: Text(self.enUser.enUsername), trailing: Image(systemName: "house"))
+        .navigationBarItems(
+          leading:
+            enUser.enLoggedIn ?
+            Text("Hi: \(String(self.enUser.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
+            Text(""),
+          trailing:
+            Image(systemName: "house")
+        )
       }.tabItem {
         Image(systemName: "house")
         Text("Home")
@@ -32,10 +39,15 @@ struct ContentView: View {
       NavigationView {
         VStack {
           Spacer()
-          StatementView()
+          StatementView(cycles: [])
         }
         .navigationBarTitle("Statement")
-        .navigationBarItems(trailing: Image(systemName: "doc.plaintext"))
+        .navigationBarItems(
+          leading:
+            enUser.enLoggedIn ?
+            Text("Hi: \(String(self.enUser.enUsername.dropLast(12)))").foregroundColor(.green) :
+            Text(""),
+          trailing: Image(systemName: "doc.plaintext"))
       }.tabItem {
         Image(systemName: "doc.plaintext")
         Text("Statement")
@@ -46,7 +58,12 @@ struct ContentView: View {
           ActivityView()
         }
         .navigationBarTitle("Activity")
-        .navigationBarItems(trailing: Image(systemName: "dollarsign.circle"))
+        .navigationBarItems(
+          leading:
+            enUser.enLoggedIn ?
+            Text("Hi: \(String(self.enUser.enUsername.dropLast(12)))").foregroundColor(.green) :
+            Text(""),
+          trailing: Image(systemName: "dollarsign.circle"))
       }.tabItem {
         Image(systemName: "dollarsign.circle")
         Text("Activity")
@@ -63,13 +80,19 @@ struct ContentView: View {
         Text("About")
       }.tag(2)
     }
+    .onAppear{
+      if (UserDefaults.standard.string(forKey: "Username") != nil) {
+        enUser.enLoggedIn = true
+        enUser.enUsername = UserDefaults.standard.string(forKey: "Username")!
+      }
+    }
     
   }
 }
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    ContentView().environmentObject(EnUser())
       .preferredColorScheme(.dark)
   }
 }
