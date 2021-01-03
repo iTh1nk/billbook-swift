@@ -17,33 +17,33 @@ class LoginViewModel: ObservableObject {
   @StateObject private var userVM = UserViewModel()
   
   // ********** TEST STARTS **********
-  func decode(jwtToken jwt: String) throws -> [String: String] {
-    
-    enum DecodeErrors: Error {
-      case badToken
-      case other
-    }
-    
-    func base64Decode(_ base64: String) throws -> Data {
-      let padded = base64.padding(toLength: ((base64.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
-      guard let decoded = Data(base64Encoded: padded) else {
-        throw DecodeErrors.badToken
+  func decode(jwtToken jwt: String) throws -> [String: Any] {
+
+      enum DecodeErrors: Error {
+          case badToken
+          case other
       }
-      return decoded
-    }
-    
-    func decodeJWTPart(_ value: String) throws -> [String: String] {
-      let bodyData = try base64Decode(value)
-      let json = try JSONSerialization.jsonObject(with: bodyData, options: [])
-      guard let payload = json as? [String: String] else {
-        throw DecodeErrors.other
+
+      func base64Decode(_ base64: String) throws -> Data {
+          let padded = base64.padding(toLength: ((base64.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
+          guard let decoded = Data(base64Encoded: padded) else {
+              throw DecodeErrors.badToken
+          }
+          return decoded
       }
-      return payload
+
+      func decodeJWTPart(_ value: String) throws -> [String: Any] {
+          let bodyData = try base64Decode(value)
+          let json = try JSONSerialization.jsonObject(with: bodyData, options: [])
+          guard let payload = json as? [String: Any] else {
+              throw DecodeErrors.other
+          }
+          return payload
+      }
+
+      let segments = jwt.components(separatedBy: ".")
+      return try decodeJWTPart(segments[1])
     }
-    
-    let segments = jwt.components(separatedBy: ".")
-    return try decodeJWTPart(segments[1])
-  }
   // ########## TEST ENDS ##########
   
   
@@ -67,7 +67,19 @@ class LoginViewModel: ObservableObject {
       let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
       print("***FinalData: ", finalData)
       if finalData.status == 200 {
-        enUser.enUsername = "We0mmm"
+        DispatchQueue.main.async {
+          do {
+            //          print((finalData.token).dropFirst(7))
+            //          print(finalData.token)
+            
+            enUser.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
+            
+            //          try print(self.decode(jwtToken: String(finalData.token.dropFirst(7))))
+          } catch _ {
+            print("Error")
+          }
+          
+        }
       } else { return }
     }
     .resume()

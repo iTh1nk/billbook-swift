@@ -38,8 +38,7 @@ struct LoginView: View {
           Text(item.token)
         }
         Button(action: {
-//          self.loginVM.checkDetails(username: loginVM.username, password: loginVM.password, enUser: enUser)
-          enUser.enUsername = "OMG"
+          self.loginVM.checkDetails(username: loginVM.username, password: loginVM.password, enUser: enUser)
         }) {
           RoundedRectangle(cornerRadius: 10)
             .frame(width: 80,height: 39)
