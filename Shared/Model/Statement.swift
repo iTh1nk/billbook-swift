@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Statement: Identifiable {
-  let id: String
+struct Statement: Identifiable, Decodable {
+  let id: Int
   let username: String
   let balance: String
   let notes: String

@@ -13,4 +13,5 @@ class EnObj: ObservableObject {
   @Published var enLoggedIn: Bool = false
   @Published var totalBalance: String = "0"
   @Published var errorLogin: String = ""
+  @Published var statement: Array = [Statement]()
 }

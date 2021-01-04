@@ -11,14 +11,21 @@ struct StatementView: View {
   
   @State var cycles: [Cycle] = []
   
+  @EnvironmentObject var enObj: EnObj
+  
   var body: some View {
     
       List(cycles) { cycle in
 
-          NavigationLink(destination: StatementDetail()) {
+        NavigationLink(destination: StatementDetail().environmentObject(enObj)) {
             HStack {
               Image(systemName: "doc.plaintext")
               Text(cycle.date)
+            }
+            .onAppear{
+              StatementViewModel().getStatement(cycleId: "11", enObj: enObj) { (statement) -> Void in
+                enObj.statement = statement
+              }
             }
           }
 

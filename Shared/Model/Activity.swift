@@ -15,11 +15,3 @@ struct Activity: Codable {
   let createdAt: String
   let updatedAt: String
 }
-
-struct ActivityResponse: Codable {
-  var events: [String: String]
-}
-
-class EnActivity: ObservableObject {
-  @Published var totalBalance: String = "0"
-}

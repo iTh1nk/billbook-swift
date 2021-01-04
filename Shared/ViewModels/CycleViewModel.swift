@@ -8,6 +8,7 @@
 import Foundation
 
 class ApiCycle {
+  
   func getCycle(completion: @escaping ([Cycle]) -> ()) {
     guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/cycles/get/") else { return }
     URLSession.shared.dataTask(with: url) { (data, _, _) in
@@ -18,4 +19,5 @@ class ApiCycle {
     }
     .resume()
   }
+  
 }
