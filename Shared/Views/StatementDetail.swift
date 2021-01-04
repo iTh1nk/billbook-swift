@@ -10,14 +10,13 @@ import SwiftUI
 struct StatementDetail: View {
   
   @Environment(\.presentationMode) var presentationMode
-  
+  @State var cycleId: Int
   @EnvironmentObject var enObj: EnObj
   
   var body: some View {
     VStack {
-      Text("Hello")
       List (enObj.statement) { statement in
-        Text("Hello: \(statement.balance)")
+        Text("Balance: \(statement.balance)")
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -26,15 +25,17 @@ struct StatementDetail: View {
     .onTapGesture {
       presentationMode.wrappedValue.dismiss()
     }
-    .onAppear {
-      print(enObj.statement)
+    .onAppear{
+      StatementViewModel().getStatement(cycleId: cycleId, enObj: enObj) { (cycle) -> Void in
+        enObj.statement = cycle.cycle_statements
+      }
     }
   }
 }
 
 struct StatementDetail_Previews: PreviewProvider {
   static var previews: some View {
-    StatementDetail().environmentObject(EnObj())
+    StatementDetail(cycleId: 11).environmentObject(EnObj())
       .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }

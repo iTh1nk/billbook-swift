@@ -17,15 +17,10 @@ struct StatementView: View {
     
       List(cycles) { cycle in
 
-        NavigationLink(destination: StatementDetail().environmentObject(enObj)) {
+        NavigationLink(destination: StatementDetail(cycleId: cycle.id).environmentObject(enObj)) {
             HStack {
               Image(systemName: "doc.plaintext")
               Text(cycle.date)
-            }
-            .onAppear{
-              StatementViewModel().getStatement(cycleId: "11", enObj: enObj) { (cycle) -> Void in
-                enObj.statement = cycle.cycle_statements
-              }
             }
           }
 

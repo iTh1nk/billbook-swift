@@ -9,16 +9,16 @@ import SwiftUI
 
 struct ActivityView: View {
   
+  @EnvironmentObject var enObj: EnObj
+  
   var body: some View {
     
-    List {
+    List (enObj.activity) { activity in
       
-      Section(header: Text("2020-03-02")) {
-        Text("Activity Details")
+      Section(header: Text("\(activity.date)")) {
+        Text("Amount: \(activity.amount)")
         .padding(.leading)
-      }
-      Section(header: Text("2019-06-09")) {
-        Text("Activity Details")
+        Text("Total Balance: \(activity.totalBalance)")
         .padding(.leading)
       }
     }
@@ -30,7 +30,7 @@ struct ActivityView: View {
 
 struct ActivityView_Previews: PreviewProvider {
   static var previews: some View {
-    ActivityView()
+    ActivityView().environmentObject(EnObj())
       .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
   }
 }

@@ -64,7 +64,7 @@ struct ContentView: View {
         
         NavigationView {
           VStack {
-            ActivityView()
+            ActivityView().environmentObject(enObj)
           }
           .navigationBarTitle("Activity")
           .navigationBarItems(
@@ -73,7 +73,13 @@ struct ContentView: View {
               Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
               Text(""),
             trailing: Image(systemName: "dollarsign.circle"))
-        }.tabItem {
+        }
+        .onAppear{
+          ActivityViewModel().getActivity(userId: UserDefaults.standard.string(forKey: "UserID")!) { (user) in
+            enObj.activity = user.user_activities
+          }
+        }
+        .tabItem {
           Image(systemName: "dollarsign.circle")
           Text("Activity")
         }.tag(2)

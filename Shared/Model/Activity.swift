@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Activity: Codable {
+struct Activity: Identifiable, Decodable {
+  let id: Int
   let date: String
   let amount: String
   let totalBalance: String

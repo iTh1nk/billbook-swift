@@ -7,10 +7,14 @@
 
 import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Decodable {
   let id: String
-  let username: String
-  let token: String
-  let loginTime: String
-  let logoutTime: String
+  let email: String
+  let profile: Profile
+  let last_login: String
+  let is_active: Bool
+  let is_staff: Bool
+  let is_superuser: Bool
+  let user_activities: [Activity]
+  let user_statements: [Statement]
 }

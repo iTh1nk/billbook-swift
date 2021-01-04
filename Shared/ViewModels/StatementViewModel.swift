@@ -9,8 +9,8 @@ import Foundation
 
 class StatementViewModel: ObservableObject {
   
-  func getStatement(cycleId: String, enObj: EnObj, completionHandler: @escaping (Cycle) -> Void) {
-    guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/cycles/get/" + cycleId) else {
+  func getStatement(cycleId: Int, enObj: EnObj, completionHandler: @escaping (Cycle) -> Void) {
+    guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/cycles/get/" + String(cycleId)) else {
       print("Invalid URL")
       return
     }
