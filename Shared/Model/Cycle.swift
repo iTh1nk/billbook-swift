@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Cycle: Identifiable, Codable {
+struct Cycle: Identifiable, Decodable {
   let id: Int
   let date: String
   let is_read: String
   let createdAt: String
   let updatedAt: String
-//  let cycle_statements: Array<Statement>
+  let cycle_statements: [Statement]
 }

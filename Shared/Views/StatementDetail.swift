@@ -16,9 +16,9 @@ struct StatementDetail: View {
   var body: some View {
     VStack {
       Text("Hello")
-//      List (enObj.statement) { statement in
-//        Text("Hello: \(statement.balance)")
-//      }
+      List (enObj.statement) { statement in
+        Text("Hello: \(statement.balance)")
+      }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.black)
