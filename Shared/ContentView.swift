@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
   
   @State private var storedUsername: String = UserDefaults.standard.string(forKey: "Username") ?? ""
-  @EnvironmentObject var enUser: EnUser
+  @EnvironmentObject var enObj: EnObj
   
   @State private var selectedTab: Int = 0
   
@@ -21,12 +21,20 @@ struct ContentView: View {
       NavigationView {
         VStack {
           HomeView()
+            .onAppear{
+              if (UserDefaults.standard.string(forKey: "Username") != nil) {
+                ActivityViewModel().getBalance(userId: UserDefaults.standard.string(forKey: "UserID")!) { (activity) -> Void in
+                  enObj.totalBalance = activity.totalBalance
+                }
+              }
+            }
+
         }
         .navigationBarTitle("Home")
         .navigationBarItems(
           leading:
-            enUser.enLoggedIn ?
-            Text("Hi: \(String(self.enUser.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
+            enObj.enLoggedIn ?
+            Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
             Text("Welcome to Billbook - iOS").foregroundColor(.gray),
           trailing:
             Image(systemName: "house")
@@ -44,8 +52,8 @@ struct ContentView: View {
         .navigationBarTitle("Statement")
         .navigationBarItems(
           leading:
-            enUser.enLoggedIn ?
-            Text("Hi: \(String(self.enUser.enUsername.dropLast(12)))").foregroundColor(.green) :
+            enObj.enLoggedIn ?
+            Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
             Text(""),
           trailing: Image(systemName: "doc.plaintext"))
       }.tabItem {
@@ -60,8 +68,8 @@ struct ContentView: View {
         .navigationBarTitle("Activity")
         .navigationBarItems(
           leading:
-            enUser.enLoggedIn ?
-            Text("Hi: \(String(self.enUser.enUsername.dropLast(12)))").foregroundColor(.green) :
+            enObj.enLoggedIn ?
+            Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
             Text(""),
           trailing: Image(systemName: "dollarsign.circle"))
       }.tabItem {
@@ -82,8 +90,8 @@ struct ContentView: View {
     }
     .onAppear{
       if (UserDefaults.standard.string(forKey: "Username") != nil) {
-        enUser.enLoggedIn = true
-        enUser.enUsername = UserDefaults.standard.string(forKey: "Username")!
+        enObj.enLoggedIn = true
+        enObj.enUsername = UserDefaults.standard.string(forKey: "Username")!
       }
     }
     
@@ -92,7 +100,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView().environmentObject(EnUser())
+    ContentView().environmentObject(EnObj())
       .preferredColorScheme(.dark)
   }
 }

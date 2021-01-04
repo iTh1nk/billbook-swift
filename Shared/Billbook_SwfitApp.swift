@@ -10,11 +10,11 @@ import SwiftUI
 @main
 struct Billbook_SwfitApp: App {
   
-  @StateObject private var enUser = EnUser()
+  @StateObject private var enObj = EnObj()
   
   var body: some Scene {
     WindowGroup {
-      ContentView().environmentObject(enUser)
+      ContentView().environmentObject(enObj)
     }
   }
 }

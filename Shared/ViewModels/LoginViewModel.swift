@@ -50,7 +50,7 @@ class LoginViewModel: ObservableObject {
       didChange.send(self)
     }
   }
-  func checkDetails(username: String, password: String, enUser: EnUser) {
+  func loginUser(username: String, password: String, enObj: EnObj) {
     guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/auth/login/") else { return }
     let body: [String: String] = ["email": username, "password": password]
     let finalBody = try! JSONSerialization.data(withJSONObject: body)
@@ -65,29 +65,33 @@ class LoginViewModel: ObservableObject {
       if finalData.status == 200 {
         DispatchQueue.main.async {
           do {
-            //          print((finalData.token).dropFirst(7))
-            //          print(finalData.token)
             print(try self.decode(jwtToken: finalData.token))
-            enUser.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
-            enUser.enLoggedIn = true
-            UserDefaults.standard.set(enUser.enUsername, forKey: "Username")
+//            enObj.errorLogin = ""
+            enObj.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
+            enObj.enLoggedIn = true
+            UserDefaults.standard.set(enObj.enUsername, forKey: "Username")
             UserDefaults.standard.set(try self.decode(jwtToken: finalData.token)["exp"], forKey: "Exp")
             UserDefaults.standard.set(try self.decode(jwtToken: finalData.token)["user_id"], forKey: "UserID")
             UserDefaults.standard.set(finalData.token, forKey: "Token")
-            
-            //          try print(self.decode(jwtToken: String(finalData.token.dropFirst(7))))
+            ActivityViewModel().getBalance(userId: try self.decode(jwtToken: finalData.token)["user_id"] as! String) { (activity) -> Void in
+              enObj.totalBalance = activity.totalBalance
+            }
           } catch _ {
             print("Error")
           }
           
+        }
+      } else if finalData.status == 401 {
+        DispatchQueue.main.async {
+          enObj.errorLogin = "Username and password do not match!"
         }
       } else { return }
     }
     .resume()
   }
   
-  @Published var username = "mac@mac.com"
-  @Published var password = "macmaster"
+  @Published var username = "9299@we0mmm.site"
+  @Published var password = "9299"
   @Published var token = ""
   @Published var isValid = false
   @Published var inlineErrorForPassword = ""

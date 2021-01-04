@@ -12,7 +12,7 @@ struct LoginView: View {
   
   @StateObject private var loginVM = LoginViewModel()
   
-  @EnvironmentObject var enUser: EnUser
+  @EnvironmentObject var enObj: EnObj
   
   var body: some View {
     NavigationView {
@@ -26,9 +26,12 @@ struct LoginView: View {
             SecureField("Password", text: $loginVM.password)
           }
         }
-        
+        Text("\(enObj.errorLogin)")
+          .foregroundColor(.red)
+          .fontWeight(.bold)
+          .font(.system(size: 15))
         Button(action: {
-          self.loginVM.checkDetails(username: loginVM.username, password: loginVM.password, enUser: enUser)
+          self.loginVM.loginUser(username: loginVM.username, password: loginVM.password, enObj: enObj)
         }) {
           RoundedRectangle(cornerRadius: 10)
             .frame(height: 60)
@@ -44,7 +47,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
-    LoginView()
+    LoginView().environmentObject(EnObj())
       .preferredColorScheme(.dark)
   }
 }

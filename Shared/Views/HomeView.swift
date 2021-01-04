@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
   
   @State private var isLogin: Bool = false
-  @EnvironmentObject var enUser: EnUser
+  @EnvironmentObject var enObj: EnObj
+  @StateObject var digitColor = DigitColor()
   
 //  @State private var showAlert: Bool = true
   
@@ -45,33 +46,23 @@ struct HomeView: View {
       .padding([.top, .horizontal])
       
 //      Display User Balance or Login Bar
-      
-
-      HStack {
-        Text("Check")
-      }
-      .contentShape(Rectangle())
-      .listStyle(SidebarListStyle())
-      .onAppear{
-        ActivityViewModel().getBalance(userId: "0585fb98-78fc-4363-980a-32d63c32cc3e")
-      }
-      
-      if enUser.enLoggedIn {
+      if enObj.enLoggedIn {
         HStack {
           VStack(alignment: .leading) {
-            Text("Balance as of current cycle: ")
+            Text(digitColor.digitColor(digitString: enObj.totalBalance) ? "No Overdue: " : "Total Balance Due: ")
               .font(.headline)
               .foregroundColor(.secondary)
               .padding(.top)
-            Text("$123")
+            Text("$\(enObj.totalBalance)")
               .font(.title)
               .fontWeight(.black)
-              .foregroundColor(.primary)
+              .foregroundColor(digitColor.digitColor(digitString: enObj.totalBalance) ? .green : .red)
               .lineLimit(3)
               .padding(.vertical)
-            Text("No action required".uppercased())
+            Text("- No action required -".uppercased())
               .font(.caption)
               .foregroundColor(.secondary)
+              .opacity(digitColor.digitColor(digitString: enObj.totalBalance) ? 1 : 0)
           }
           .layoutPriority(100)
           Spacer()
@@ -120,9 +111,9 @@ struct HomeView: View {
 //            Alert(title: Text("Test"), message: Text("Body Test"))
 //        })
       
-      if enUser.enLoggedIn {
+      if enObj.enLoggedIn {
         Button(action: {
-          enUser.enLoggedIn = false
+          enObj.enLoggedIn = false
           UserDefaults.standard.removeObject(forKey: "Username")
           UserDefaults.standard.removeObject(forKey: "Exp")
           UserDefaults.standard.removeObject(forKey: "UserID")
@@ -141,7 +132,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView().environmentObject(EnUser())
+    HomeView().environmentObject(EnObj())
       .preferredColorScheme(.dark)
   }
 }

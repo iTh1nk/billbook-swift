@@ -19,3 +19,7 @@ struct Activity: Codable {
 struct ActivityResponse: Codable {
   var events: [String: String]
 }
+
+class EnActivity: ObservableObject {
+  @Published var totalBalance: String = "0"
+}
