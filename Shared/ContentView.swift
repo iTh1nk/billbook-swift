@@ -44,38 +44,40 @@ struct ContentView: View {
         Text("Home")
       }.tag(0)
       
-      NavigationView {
-        VStack {
-          Spacer()
-          StatementView(cycles: [])
-        }
-        .navigationBarTitle("Statement")
-        .navigationBarItems(
-          leading:
-            enObj.enLoggedIn ?
-            Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
-            Text(""),
-          trailing: Image(systemName: "doc.plaintext"))
-      }.tabItem {
-        Image(systemName: "doc.plaintext")
-        Text("Statement")
-      }.tag(1)
-      
-      NavigationView {
-        VStack {
-          ActivityView()
-        }
-        .navigationBarTitle("Activity")
-        .navigationBarItems(
-          leading:
-            enObj.enLoggedIn ?
-            Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
-            Text(""),
-          trailing: Image(systemName: "dollarsign.circle"))
-      }.tabItem {
-        Image(systemName: "dollarsign.circle")
-        Text("Activity")
-      }.tag(2)
+      if enObj.enLoggedIn {
+        NavigationView {
+          VStack {
+            Spacer()
+            StatementView(cycles: [])
+          }
+          .navigationBarTitle("Statement")
+          .navigationBarItems(
+            leading:
+              enObj.enLoggedIn ?
+              Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
+              Text(""),
+            trailing: Image(systemName: "doc.plaintext"))
+        }.tabItem {
+          Image(systemName: "doc.plaintext")
+          Text("Statement")
+        }.tag(1)
+        
+        NavigationView {
+          VStack {
+            ActivityView()
+          }
+          .navigationBarTitle("Activity")
+          .navigationBarItems(
+            leading:
+              enObj.enLoggedIn ?
+              Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
+              Text(""),
+            trailing: Image(systemName: "dollarsign.circle"))
+        }.tabItem {
+          Image(systemName: "dollarsign.circle")
+          Text("Activity")
+        }.tag(2)
+      }
       
       NavigationView {
         VStack {

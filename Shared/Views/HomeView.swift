@@ -90,7 +90,7 @@ struct HomeView: View {
                   .shadow(radius: 10)
               }
               .sheet(isPresented: $isLogin, content: {
-                LoginView()
+                LoginView().environmentObject(enObj)
               })
             }
             Spacer()

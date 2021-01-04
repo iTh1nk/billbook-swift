@@ -26,10 +26,14 @@ struct LoginView: View {
             SecureField("Password", text: $loginVM.password)
           }
         }
-        Text("\(enObj.errorLogin)")
-          .foregroundColor(.red)
-          .fontWeight(.bold)
-          .font(.system(size: 15))
+        if enObj.errorLogin != "" {
+          VStack {
+            Text("\(enObj.errorLogin)")
+              .foregroundColor(.red)
+              .fontWeight(.bold)
+              .font(.system(size: 15))
+          }
+        }
         Button(action: {
           self.loginVM.loginUser(username: loginVM.username, password: loginVM.password, enObj: enObj)
         }) {
@@ -41,6 +45,9 @@ struct LoginView: View {
         .disabled(!loginVM.isValid)
       }
       .navigationTitle("Login")
+    }
+    .onDisappear{
+      enObj.errorLogin = ""
     }
   }
 }
