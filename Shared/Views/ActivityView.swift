@@ -20,7 +20,8 @@ struct ActivityView: View {
   ]
   
   var body: some View {
-    ScrollView {
+    
+    VStack {
       LazyVGrid(columns: coloumnLayout, spacing: 20) {
         Text("Date")
           .fontWeight(.heavy)
@@ -33,7 +34,8 @@ struct ActivityView: View {
           .foregroundColor(.gray)
       }
       .padding()
-      
+    
+      ScrollView {
       if !enObj.activity.isEmpty {
         LazyVGrid(columns: coloumnLayout, spacing: 20) {
           ForEach(enObj.activity.reversed(), id: \.self.id) { activity in
@@ -73,7 +75,7 @@ struct ActivityView: View {
       }
       
     }
-
+    }
   }
   
 }

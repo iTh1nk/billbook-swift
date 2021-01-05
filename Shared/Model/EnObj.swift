@@ -15,4 +15,5 @@ class EnObj: ObservableObject {
   @Published var errorLogin: String = ""
   @Published var statement: Array = [Statement]()
   @Published var activity: Array = [Activity]()
+  @Published var cycle: Array = [Cycle]()
 }
