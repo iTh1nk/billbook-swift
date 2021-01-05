@@ -57,7 +57,8 @@ struct ContentView: View {
               Text("Hi: \(String(self.enObj.enUsername.components(separatedBy: "@")[0]))").foregroundColor(.green) :
               Text(""),
             trailing: Image(systemName: "doc.plaintext"))
-        }.tabItem {
+        }
+        .tabItem {
           Image(systemName: "doc.plaintext")
           Text("Statement")
         }.tag(1)
@@ -87,14 +88,14 @@ struct ContentView: View {
       
       NavigationView {
         VStack {
-          
+          About()
         }
         .navigationBarTitle("About")
         .navigationBarItems(trailing: Image(systemName: "exclamationmark.circle"))
       }.tabItem {
         Image(systemName: "exclamationmark.circle")
         Text("About")
-      }.tag(2)
+      }.tag(3)
     }
     .onAppear{
       if (UserDefaults.standard.string(forKey: "Username") != nil) {

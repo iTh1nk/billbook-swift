@@ -42,7 +42,7 @@ class ActivityViewModel {
     config.httpAdditionalHeaders = ["Authorization" : UserDefaults.standard.string(forKey: "Token")!]
     URLSession(configuration: config).dataTask(with: request) { (data, resp, error) in
       if let data = data {
-        JsonDecoder(data: data)
+//        JsonDecoder(data: data)
         if let decodedResponse = try? JSONDecoder().decode(User.self, from: data) {
           DispatchQueue.main.async {
 //            print("***Final Activity Data: ", decodedResponse)

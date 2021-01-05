@@ -65,7 +65,7 @@ class LoginViewModel: ObservableObject {
       if finalData.status == 200 {
         DispatchQueue.main.async {
           do {
-            print(try self.decode(jwtToken: finalData.token))
+//            print(try self.decode(jwtToken: finalData.token))
             enObj.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
             enObj.enLoggedIn = true
             UserDefaults.standard.set(enObj.enUsername, forKey: "Username")

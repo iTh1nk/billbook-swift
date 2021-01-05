@@ -59,6 +59,7 @@ struct HomeView: View {
               .foregroundColor(digitColor.digitColor(digitString: enObj.totalBalance) ? .green : .red)
               .lineLimit(3)
               .padding(.vertical)
+              .animation(Animation.easeInOut(duration: 1))
             Text("- No action required -".uppercased())
               .font(.caption)
               .foregroundColor(.secondary)
