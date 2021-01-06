@@ -13,3 +13,8 @@ struct ServerRespLogin: Decodable {
   let token: String
 //  let non_field_errors: Array<String>
 }
+
+struct AuthChkResp: Decodable {
+//  let status: Int
+  let message: String
+}

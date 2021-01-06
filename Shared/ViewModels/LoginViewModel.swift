@@ -50,6 +50,7 @@ class LoginViewModel: ObservableObject {
       didChange.send(self)
     }
   }
+  
   func loginUser(username: String, password: String, enObj: EnObj) {
     guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/auth/login/") else { return }
     let body: [String: String] = ["email": username, "password": password]
@@ -61,7 +62,7 @@ class LoginViewModel: ObservableObject {
     URLSession.shared.dataTask(with: request) { (data, resp, error) in
       guard let data = data else { return }
       let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
-      print("***FinalData: ", finalData)
+//      print("***FinalData: ", finalData)
       if finalData.status == 200 {
         DispatchQueue.main.async {
           do {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import os
 
 struct ContentView: View {
   
@@ -96,12 +97,6 @@ struct ContentView: View {
         Image(systemName: "exclamationmark.circle")
         Text("About")
       }.tag(3)
-    }
-    .onAppear{
-      if (UserDefaults.standard.string(forKey: "Username") != nil) {
-        enObj.enLoggedIn = true
-        enObj.enUsername = UserDefaults.standard.string(forKey: "Username")!
-      }
     }
     
   }
