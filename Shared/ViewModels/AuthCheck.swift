@@ -36,6 +36,7 @@ class AuthCheck {
           UserDefaults.standard.removeObject(forKey: "Exp")
           UserDefaults.standard.removeObject(forKey: "UserID")
           UserDefaults.standard.removeObject(forKey: "Token")
+          return
         }
       }
       print("Fetch Failed: \(error?.localizedDescription ?? "Unknown Error!")")

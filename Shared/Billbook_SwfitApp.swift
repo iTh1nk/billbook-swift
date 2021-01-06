@@ -83,28 +83,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let tokenComponents = token.map { data in String(format: "%02.2hhx", data) }
     let deviceTokenString = tokenComponents.joined()
     print("***Device Token:\(deviceTokenString)")
-    let queryItems = [URLQueryItem(name: "deviceToken", value: deviceTokenString)]
-    var urlComps = URLComponents(string: "https://vzw.api.we0mmm.site/api/v1/auth/apnstoken")!
-    urlComps.queryItems = queryItems
-    guard let url = urlComps.url else {
-      return
-    }
     
-    let task = URLSession.shared.dataTask(with: url) { data, resp, error in
-      if error != nil {
-          // Handle the error
-          return
+    guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/apns/post/")
+    else { print("Invalid URL"); return }
+    let body: [String: String] = ["username": "Billbook", "apnsToken": deviceTokenString, "environment": "dev"]
+    let codededBody = try! JSONSerialization.data(withJSONObject: body)
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = codededBody
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    URLSession.shared.dataTask(with: request) { (data, resp, error) in
+      if let data = data {
+        let dataString = String(decoding: data, as: UTF8.self)
+        print("***Response: ", dataString)
+        return
       }
-      guard resp != nil else {
-          // Handle empty response
-          return
-      }
-      guard data != nil else {
-          // Handle empty data
-          return
-      }
+      print("Fetch Failed: \(error?.localizedDescription ?? "Unknown error")")
     }
-    task.resume()
+    .resume()
+    
+//    let queryItems = [URLQueryItem(name: "username", value: "billbook"), URLQueryItem(name: "apnsToken", value: deviceTokenString), URLQueryItem(name: "environment", value: "dev")]
+//    var urlComps = URLComponents(string: "https://vzw.api.we0mmm.site/api/v1/apnstoken/post/")!
+//    urlComps.queryItems = queryItems
+//    guard let url = urlComps.url else {
+//      return
+//    }
+//
+//    let task = URLSession.shared.dataTask(with: url) { data, resp, error in
+//      if error != nil {
+//          // Handle the error
+//          return
+//      }
+//      guard resp != nil else {
+//          // Handle empty response
+//          return
+//      }
+//      guard data != nil else {
+//          // Handle empty data
+//          return
+//      }
+//    }
+//    task.resume()
   }
   
   /* Example Payload
