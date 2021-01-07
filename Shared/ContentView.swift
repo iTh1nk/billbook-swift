@@ -98,6 +98,9 @@ struct ContentView: View {
         Text("About")
       }.tag(3)
     }
+    .onAppear{
+      ApnsTokenForward().lastUseAppBasedOnDeviceToken(token: UserDefaults.standard.data(forKey: "DeviceTokenData")!)
+    }
     
   }
 }

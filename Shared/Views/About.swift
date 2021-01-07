@@ -20,6 +20,8 @@ struct About: View {
               .rotationEffect(.degrees(angle))
               .animation(.interpolatingSpring(mass: 1, stiffness: 1, damping: 0.5, initialVelocity: 5))
       }
+      .onAppear{
+      }
     }
 }
 

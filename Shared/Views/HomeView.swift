@@ -78,6 +78,8 @@ struct HomeView: View {
             UserDefaults.standard.removeObject(forKey: "Exp")
             UserDefaults.standard.removeObject(forKey: "UserID")
             UserDefaults.standard.removeObject(forKey: "Token")
+//            UserDefaults.standard.removeObject(forKey: "DeviceToken")
+//            UserDefaults.standard.removeObject(forKey: "DeviceTokenData")
           }) {
             RoundedRectangle(cornerRadius: 10).fill(Color.red)
               .frame(height: 60)

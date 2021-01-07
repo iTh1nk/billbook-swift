@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import os
 
 class LoginViewModel: ObservableObject {
   
@@ -14,32 +15,32 @@ class LoginViewModel: ObservableObject {
   
   // ********** TEST STARTS **********
   func decode(jwtToken jwt: String) throws -> [String: Any] {
-
-      enum DecodeErrors: Error {
-          case badToken
-          case other
-      }
-
-      func base64Decode(_ base64: String) throws -> Data {
-          let padded = base64.padding(toLength: ((base64.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
-          guard let decoded = Data(base64Encoded: padded) else {
-              throw DecodeErrors.badToken
-          }
-          return decoded
-      }
-
-      func decodeJWTPart(_ value: String) throws -> [String: Any] {
-          let bodyData = try base64Decode(value)
-          let json = try JSONSerialization.jsonObject(with: bodyData, options: [])
-          guard let payload = json as? [String: Any] else {
-              throw DecodeErrors.other
-          }
-          return payload
-      }
-
-      let segments = jwt.components(separatedBy: ".")
-      return try decodeJWTPart(segments[1])
+    
+    enum DecodeErrors: Error {
+      case badToken
+      case other
     }
+    
+    func base64Decode(_ base64: String) throws -> Data {
+      let padded = base64.padding(toLength: ((base64.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
+      guard let decoded = Data(base64Encoded: padded) else {
+        throw DecodeErrors.badToken
+      }
+      return decoded
+    }
+    
+    func decodeJWTPart(_ value: String) throws -> [String: Any] {
+      let bodyData = try base64Decode(value)
+      let json = try JSONSerialization.jsonObject(with: bodyData, options: [])
+      guard let payload = json as? [String: Any] else {
+        throw DecodeErrors.other
+      }
+      return payload
+    }
+    
+    let segments = jwt.components(separatedBy: ".")
+    return try decodeJWTPart(segments[1])
+  }
   // ########## TEST ENDS ##########
   
   
@@ -52,8 +53,9 @@ class LoginViewModel: ObservableObject {
   }
   
   func loginUser(username: String, password: String, enObj: EnObj) {
+    
     guard let url = URL(string: "https://vzw.api.we0mmm.site/api/v1/auth/login/") else { return }
-    let body: [String: String] = ["email": username, "password": password]
+    let body: [String: String] = ["email": username == "mac" ? "mac@mac.com" : username + "@we0mmm.site", "password": password]
     let finalBody = try! JSONSerialization.data(withJSONObject: body)
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -62,11 +64,11 @@ class LoginViewModel: ObservableObject {
     URLSession.shared.dataTask(with: request) { (data, resp, error) in
       guard let data = data else { return }
       let finalData = try! JSONDecoder().decode(ServerRespLogin.self, from: data)
-//      print("***FinalData: ", finalData)
+      //      print("***FinalData: ", finalData)
       if finalData.status == 200 {
         DispatchQueue.main.async {
           do {
-//            print(try self.decode(jwtToken: finalData.token))
+            //            print(try self.decode(jwtToken: finalData.token))
             enObj.enUsername = try self.decode(jwtToken: finalData.token)["username"] as! String
             enObj.enLoggedIn = true
             UserDefaults.standard.set(enObj.enUsername, forKey: "Username")
@@ -75,6 +77,15 @@ class LoginViewModel: ObservableObject {
             UserDefaults.standard.set(finalData.token, forKey: "Token")
             ActivityViewModel().getBalance(userId: try self.decode(jwtToken: finalData.token)["user_id"] as! String) { (activity) -> Void in
               enObj.totalBalance = activity.totalBalance
+            }
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (allowed, error) in
+              //This callback does not trigger on main loop be careful
+              if allowed {
+                os_log(.debug, "Allowed: \(allowed)")
+                ApnsTokenForward().forwardTokenToServer(token: UserDefaults.standard.data(forKey: "DeviceTokenData")!)
+              } else {
+                os_log(.debug, "Error")
+              }
             }
           } catch _ {
             print("Error")
@@ -90,8 +101,8 @@ class LoginViewModel: ObservableObject {
     .resume()
   }
   
-  @Published var username = "9299@we0mmm.site"
-  @Published var password = "9299"
+  @Published var username = ""
+  @Published var password = ""
   @Published var token = ""
   @Published var isValid = false
   @Published var inlineErrorForPassword = ""
@@ -128,7 +139,7 @@ class LoginViewModel: ObservableObject {
     $username
       .debounce(for: 0.8, scheduler: RunLoop.main)
       .removeDuplicates()
-      .map { $0.count >= 5 }
+      .map { $0.count >= 3 }
       .eraseToAnyPublisher()
   }
   private var isPasswordEmptyPublisher: AnyPublisher<Bool, Never> {
@@ -143,7 +154,7 @@ class LoginViewModel: ObservableObject {
       .debounce(for: 0.8, scheduler: RunLoop.main)
       .removeDuplicates()
       .map {
-//        Self.pwdCheck.evaluate(with: $0)
+        //        Self.pwdCheck.evaluate(with: $0)
         $0.count > 3
       }
       .eraseToAnyPublisher()
