@@ -58,7 +58,7 @@ struct StatementDetail: View {
         }
       }
     }
-    .navigationBarTitle("Details")
+    .padding(.bottom)
     //    .frame(maxWidth: .infinity, maxHeight: .infinity)
     //    .background(Color.black)
     //    .edgesIgnoringSafeArea(.all)

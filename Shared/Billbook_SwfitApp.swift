@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     print("***Device Token Data:\(deviceToken)")
 //    ApnsTokenForward().forwardTokenToServer(token: deviceToken)
     UserDefaults.standard.setValue(deviceToken, forKey: "DeviceTokenData")
+    print("***Device Token UserDefault:\(UserDefaults.standard.data(forKey: "DeviceTokenData")!)")
   }
   
   // MARK: UISceneSession Lifecycle

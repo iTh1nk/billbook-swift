@@ -82,7 +82,10 @@ class LoginViewModel: ObservableObject {
               //This callback does not trigger on main loop be careful
               if allowed {
                 os_log(.debug, "Allowed: \(allowed)")
-                ApnsTokenForward().forwardTokenToServer(token: UserDefaults.standard.data(forKey: "DeviceTokenData")!)
+                if UserDefaults.standard.data(forKey: "DeviceTokenData") != nil {
+                  print("^%*&%^&%^&%*^%*%*&^%*&%*&%*^&%*&%*&^%^&*%*&^%&*^%*&%*^&")
+                  ApnsTokenForward().forwardTokenToServer(token: UserDefaults.standard.data(forKey: "DeviceTokenData")!)
+                }
               } else {
                 os_log(.debug, "Error")
               }

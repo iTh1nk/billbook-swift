@@ -18,6 +18,7 @@ struct StatementView: View {
     
     VStack {
       if !enObj.cycle.isEmpty {
+        Text(" ")
         List(cycles) { cycle in
           NavigationLink(destination: StatementDetail(cycleId: cycle.id, cycleDate: cycle.date).environmentObject(enObj)) {
             HStack {

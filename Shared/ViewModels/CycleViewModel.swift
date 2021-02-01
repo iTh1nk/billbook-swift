@@ -14,7 +14,6 @@ class ApiCycle {
     URLSession.shared.dataTask(with: url) { (data, _, _) in
       let cycles = try! JSONDecoder().decode([Cycle].self, from: data!)
       DispatchQueue.main.async {
-        print("^%*&%^&%^&%*^%*%*&^%*&%*&%*^&%*&%*&^%^&*%*&^%&*^%*&%*^&")
         enObj.cycle = cycles
         completion(cycles)
       }
