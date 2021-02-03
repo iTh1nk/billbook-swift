@@ -101,7 +101,6 @@ struct ContentView: View {
     .accentColor(.green)
     .onAppear{
       if UserDefaults.standard.data(forKey: "DeviceTokenData") != nil {
-        print("^%*&%^&%^&%*^%*%*&^%*&%*&%*^&%*&%*&^%^&*%*&^%&*^%*&%*^&")
         ApnsTokenForward().lastUseAppBasedOnDeviceToken(token: UserDefaults.standard.data(forKey: "DeviceTokenData")!)
       }
     }
