@@ -24,19 +24,10 @@ struct Provider: IntentTimelineProvider {
   }
   
   func getTimeline(for configuration: CycleCategoriesIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-    //    var entries: [SimpleEntry] = []
-    
-    // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-//    let currentDate = Date()
-    //    for hourOffset in 0 ..< 5 {
-    //      let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: currentDate)!
-    //      let entry = SimpleEntry(date: entryDate, configuration: configuration)
-    //      entries.append(entry)
-    //    }
     
     getCycleForWidget() { cycles in
       if let cycle = cycles.first {
-        let entry = SimpleEntry(date: Date(), notification: "Latest Cycle:\n \(cycle.date)")
+        let entry = SimpleEntry(date: Date(), notification: "\(DateFormatter(for: configuration, date: cycle.date) )")
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
       } else {
@@ -46,27 +37,73 @@ struct Provider: IntentTimelineProvider {
       }
     }
     
-//    let timeline = Timeline(entries: entries, policy: .atEnd)
-//    completion(timeline)
   }
 }
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
-//  let configuration: ConfigurationIntent
   let notification: String
 }
 
 struct BillBook_WidgetEntryView : View {
   
   var entry: Provider.Entry
+  @Environment(\.widgetFamily) var family
   
   var body: some View {
-    ZStack {
-//      Text(entry.date, style: .time)
-      Color(red: 215/255, green: 63/255, blue: 12/255)
-      Text(entry.notification)
-        .bold()
+    
+    switch family {
+    case .systemLarge:
+      ZStack {
+        Color(red: 215/255, green: 63/255, blue: 12/255)
+        VStack {
+          Spacer()
+          Text("Current Cycle")
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .padding(.bottom, 5)
+          Text(entry.notification)
+            .foregroundColor(.white)
+            .fontWeight(.heavy)
+            .font(.system(size: 23))
+          Spacer()
+          Spacer()
+        }
+      }
+    case .systemMedium:
+      ZStack {
+        Color(red: 215/255, green: 63/255, blue: 12/255)
+        VStack {
+          Spacer()
+          Text("Current Cycle")
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .padding(.bottom, 5)
+          Text(entry.notification)
+            .foregroundColor(.white)
+            .fontWeight(.heavy)
+            .font(.system(size: 23))
+          Spacer()
+          Spacer()
+        }
+      }
+    default:
+      ZStack {
+        Color(red: 215/255, green: 63/255, blue: 12/255)
+        VStack {
+          Spacer()
+          Text("Current Cycle")
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .padding(.bottom, 5)
+          Text(entry.notification)
+            .foregroundColor(.white)
+            .fontWeight(.heavy)
+            .font(.system(size: 23))
+          Spacer()
+          Spacer()
+        }
+      }
     }
   }
 }
@@ -80,7 +117,8 @@ struct BillBook_Widget: Widget {
       BillBook_WidgetEntryView(entry: entry)
     }
     .configurationDisplayName("BillBook")
-    .description("Choose a cycle to show content")
+    .description("Choose a format that you prefer:")
+    .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
   }
 }
 

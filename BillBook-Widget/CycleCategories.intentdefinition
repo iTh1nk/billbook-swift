@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>INEnumDisplayName</key>
-			<string>Cycles</string>
+			<string>Format</string>
 			<key>INEnumDisplayNameID</key>
 			<string>vvfFm8</string>
 			<key>INEnumGeneratesHeader</key>
@@ -19,7 +19,7 @@
 			<array>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>01-01</string>
+					<string>unknown</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>hRjYqj</string>
 					<key>INEnumValueName</key>
@@ -27,23 +27,63 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>cycle 0109</string>
+					<string>Dashed</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>JJVfZF</string>
 					<key>INEnumValueIndex</key>
 					<integer>1</integer>
 					<key>INEnumValueName</key>
-					<string>Cycle0109</string>
+					<string>dash</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>cycle 1209</string>
+					<string>Slashed</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>POe2zL</string>
 					<key>INEnumValueIndex</key>
 					<integer>2</integer>
 					<key>INEnumValueName</key>
-					<string>Cycle1209</string>
+					<string>slash</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Dotted</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Y7uIn3</string>
+					<key>INEnumValueIndex</key>
+					<integer>3</integer>
+					<key>INEnumValueName</key>
+					<string>dot</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Spaced</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>BGhTgZ</string>
+					<key>INEnumValueIndex</key>
+					<integer>4</integer>
+					<key>INEnumValueName</key>
+					<string>space</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Tilded</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>d44x5S</string>
+					<key>INEnumValueIndex</key>
+					<integer>5</integer>
+					<key>INEnumValueName</key>
+					<string>tilde</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Hashed</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>Kmb4U3</string>
+					<key>INEnumValueIndex</key>
+					<integer>6</integer>
+					<key>INEnumValueName</key>
+					<string>hash</string>
 				</dict>
 			</array>
 		</dict>
