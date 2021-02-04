@@ -98,6 +98,17 @@ struct ContentView: View {
         Text("About")
       }.tag(3)
     }
+    .onOpenURL(perform: { url in
+      let urlStr = url.host ?? ""
+      if urlStr.contains("=") {
+        let arr = urlStr.split(separator: "=")
+        let key = arr[0]
+        let value = arr[1]
+        if (key == "tab") {
+          selectedTab = Int(value) ?? 0
+        }
+      }
+    })
     .accentColor(.green)
     .onAppear{
       if UserDefaults.standard.data(forKey: "DeviceTokenData") != nil {
