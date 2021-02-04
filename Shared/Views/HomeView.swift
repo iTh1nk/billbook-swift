@@ -30,7 +30,7 @@ struct HomeView: View {
               .fontWeight(.heavy).foregroundColor(Color.white)
               .shadow(radius: 10)
               .padding(.bottom, 6)
-            Text("CLOSE YOUR RINGS!")
+            Text("CLOSE YOUR RINGS")
               .font(.system(size: 30))
               .fontWeight(.heavy).foregroundColor(Color.white)
               .shadow(radius: 10)

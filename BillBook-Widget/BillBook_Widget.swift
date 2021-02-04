@@ -59,7 +59,7 @@ struct BillBook_WidgetEntryView : View {
       MediumView(entry: entry)
     default:
       SmallView(entry: entry)
-        .widgetURL(URL(string: "m0bb://tab=3"))
+        .widgetURL(URL(string: "m0bb://tab=0"))
     }
   }
 }
@@ -73,7 +73,7 @@ struct BillBook_Widget: Widget {
       BillBook_WidgetEntryView(entry: entry)
     }
     .configurationDisplayName("BillBook")
-    .description("Choose a format that you prefer:")
+    .description("Just choose one you like")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
   }
 }

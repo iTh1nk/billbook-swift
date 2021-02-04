@@ -33,16 +33,17 @@ struct SmallView: View {
         Text("Current Cycle")
           .foregroundColor(.white)
           .fontWeight(.bold)
-          .padding(.bottom, 5)
-          .shadow(color: .black, radius: 2)
+          .padding(.bottom, 3)
+          .shadow(color: .black, radius: 1)
         Text(entry.notification)
           .foregroundColor(.white)
           .fontWeight(.heavy)
           .font(.system(size: 23))
-          .shadow(color: .black, radius: 2)
+          .shadow(color: .black, radius: 1)
         Spacer()
         Spacer()
       }
+      .padding(.top, 8)
     }
   }
 }
