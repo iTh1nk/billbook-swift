@@ -19,7 +19,7 @@ struct Provider: IntentTimelineProvider {
   }
   
   func getSnapshot(for configuration: CycleCategoriesIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-    let entry = SimpleEntry(date: Date(), notification: "Get Latest Cycle Date")
+    let entry = SimpleEntry(date: Date(), notification: "2021-01-09")
     completion(entry)
   }
   
@@ -54,42 +54,12 @@ struct BillBook_WidgetEntryView : View {
     
     switch family {
     case .systemLarge:
-      ZStack {
-        Color(red: 215/255, green: 63/255, blue: 12/255)
-        VStack {
-          Spacer()
-          Text("Current Cycle")
-            .foregroundColor(.white)
-            .fontWeight(.bold)
-            .padding(.bottom, 5)
-          Text(entry.notification)
-            .foregroundColor(.white)
-            .fontWeight(.heavy)
-            .font(.system(size: 23))
-          Spacer()
-          Spacer()
-        }
-      }
+      LargeView(entry: entry)
     case .systemMedium:
-      ZStack {
-        Color(red: 215/255, green: 63/255, blue: 12/255)
-        VStack {
-          Spacer()
-          Text("Current Cycle")
-            .foregroundColor(.white)
-            .fontWeight(.bold)
-            .padding(.bottom, 5)
-          Text(entry.notification)
-            .foregroundColor(.white)
-            .fontWeight(.heavy)
-            .font(.system(size: 23))
-          Spacer()
-          Spacer()
-        }
-      }
+      MediumView(entry: entry)
     default:
       SmallView(entry: entry)
-        .widgetURL(URL(string: "Billbook-Swift://About"))
+        .widgetURL(URL(string: "m0bb://tab=3"))
     }
   }
 }
@@ -110,7 +80,7 @@ struct BillBook_Widget: Widget {
 
 struct BillBook_Widget_Previews: PreviewProvider {
   static var previews: some View {
-    BillBook_WidgetEntryView(entry: SimpleEntry(date: Date(), notification: "Preview"))
+    BillBook_WidgetEntryView(entry: SimpleEntry(date: Date(), notification: "2021-01-09"))
       .previewContext(WidgetPreviewContext(family: .systemSmall))
   }
 }
